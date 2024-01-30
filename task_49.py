@@ -5,8 +5,7 @@
 которые должны находиться в файле.
 1. Программа должна выводить данные
 2. Программа должна сохранять данные в текстовом файле
-3. Пользователь может ввести одну из характеристик
-для поиска определенной
+3. Пользователь может ввести одну из характеристик  для поиска определенной
 записи(Например имя или фамилию человека)
 4. Использование функций. Ваша программа не должна быть линейной
 
@@ -59,13 +58,18 @@ def create_file(file_name):
 
 
 def copy_file(file_name, file_name_new):
-    lst = list(read_file(file_name))
-    y = int(input(f"Выберите номер строки c 1 по {len(lst)}: "))
-    res = [lst[y - 1]]
-    with open(file_name_new, 'w', encoding="utf-8", newline='') as data:
-        f_writer = DictWriter(data, fieldnames=['Имя', 'Фамилия', 'Телефон'])
-        f_writer.writeheader()
-        f_writer.writerows(res)
+    with open(file_name, 'r', encoding="utf-8", newline='') as file:
+        reader = DictReader(file)
+        lst = list(reader)
+
+        y = int(input(f"Выберите номер строки от 1 до {len(lst)}: "))
+        res = [lst[y - 1]]
+
+        with open(file_name_new, 'w', encoding="utf-8", newline='') as data:
+            fieldnames = ['Имя', 'Фамилия', 'Телефон']
+            f_writer = DictWriter(data, fieldnames=fieldnames)
+            f_writer.writeheader()
+            f_writer.writerows(res)
 
 
 file_name = 'phone.csv'
